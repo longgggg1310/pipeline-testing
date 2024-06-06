@@ -1,0 +1,14 @@
+airflow_provider_great_expectations
+pandas
+pendulum==3.0.0
+psycopg2_binary==2.9.7
+pyarrow==8.0.0
+pydeequ==1.2.0
+pymongo==3.13.0
+python-dotenv
+PyYAML==6.0.1
+numpy
+polars
+minio==7.1.13
+geopandas==0.13.2
+pyproj==3.6.0

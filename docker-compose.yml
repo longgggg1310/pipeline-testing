@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+  minio:
+    image: minio/minio
+    container_name: datalake-minio
+    hostname: minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_storage:/data
+    env_file:
+      - .env
+    command: server --console-address ":9001" /data
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "curl",
+          "-f",
+          "http://localhost:9000/minio/health/live"
+        ]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+  postgresql:
+    image: debezium/postgres:13
+    platform: linux/amd64
+    container_name: postgresql
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    volumes: 
+      - dbt_postgresql_data:/var/lib/postgresql/data
+volumes:
+  minio_storage:
+  dbt_postgresql_data:
+    driver: local
